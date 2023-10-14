@@ -1,0 +1,40 @@
+{
+	"name": "users-application",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/users-application/src",
+	"projectType": "application",
+	"targets": {
+		"serve": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "apps/users-application",
+				"command": "cross-env NODE_ENV=development npx nest start --watch -p tsconfig.app.json"
+			}
+		},
+		"build": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "apps/users-application",
+				"commands": [
+					"npx rimraf ../../dist/apps/users-application",
+					"cross-env NODE_ENV=production npx nest build -p tsconfig.build.json"
+				],
+				"parallel": false
+			},
+			"dependsOn": [
+				{
+					"target": "build",
+					"dependencies": true
+				}
+			]
+		},
+		"start": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "dist/apps/users-application",
+				"command": "cross-env NODE_ENV=production node main"
+			}
+		}
+	},
+	"tags": ["nestjs-app", "users-application"]
+}

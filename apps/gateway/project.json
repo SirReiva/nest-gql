@@ -1,0 +1,40 @@
+{
+	"name": "gateway",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/gateway/src",
+	"projectType": "application",
+	"targets": {
+		"serve": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "apps/gateway",
+				"command": "cross-env NODE_ENV=development npx nest start --watch -p tsconfig.app.json"
+			}
+		},
+		"build": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "apps/gateway",
+				"commands": [
+					"npx rimraf ../../dist/apps/gateway",
+					"cross-env NODE_ENV=production npx nest build -p tsconfig.build.json"
+				],
+				"parallel": false
+			},
+			"dependsOn": [
+				{
+					"target": "build",
+					"dependencies": true
+				}
+			]
+		},
+		"start": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "dist/apps/gateway",
+				"command": "cross-env NODE_ENV=production node main"
+			}
+		}
+	},
+	"tags": ["nestjs-app", "gateway"]
+}
