@@ -1,6 +1,6 @@
 import {
-  ApolloFederationDriver,
-  ApolloFederationDriverConfig,
+	ApolloFederationDriver,
+	ApolloFederationDriverConfig,
 } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -9,18 +9,22 @@ import { PostsResolver } from './posts.resolver';
 import { PostsService } from './posts.service';
 import { UsersResolver } from './users.resolver';
 import { ApolloServerPluginInlineTrace } from '@apollo/server/plugin/inlineTrace';
+import { resolve } from 'path';
 
 @Module({
-  imports: [
-    GraphQLModule.forRoot<ApolloFederationDriverConfig>({
-      driver: ApolloFederationDriver,
-      autoSchemaFile: true,
-      plugins: [ApolloServerPluginInlineTrace()],
-      buildSchemaOptions: {
-        orphanedTypes: [User],
-      },
-    }),
-  ],
-  providers: [PostsService, PostsResolver, UsersResolver],
+	imports: [
+		GraphQLModule.forRoot<ApolloFederationDriverConfig>({
+			driver: ApolloFederationDriver,
+			autoSchemaFile: {
+				path: resolve(__dirname, 'schema.gql'),
+				federation: 2,
+			},
+			plugins: [ApolloServerPluginInlineTrace()],
+			buildSchemaOptions: {
+				orphanedTypes: [User],
+			},
+		}),
+	],
+	providers: [PostsService, PostsResolver, UsersResolver],
 })
 export class PostsModule {}
