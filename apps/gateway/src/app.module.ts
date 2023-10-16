@@ -2,6 +2,8 @@ import { IntrospectAndCompose } from '@apollo/gateway';
 import { ApolloGatewayDriver, ApolloGatewayDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
+import depthLimit from 'graphql-depth-limit-ts';
+import { ApolloServerPluginInlineTrace } from '@apollo/server/plugin/inlineTrace';
 
 @Module({
 	imports: [
@@ -15,9 +17,12 @@ import { GraphQLModule } from '@nestjs/graphql';
 					],
 				}),
 				pollIntervalInMs: 2000,
+				debug: true,
 			},
 			server: {
 				playground: true,
+				validationRules: [depthLimit(3)],
+				plugins: [ApolloServerPluginInlineTrace()],
 			},
 		}),
 	],

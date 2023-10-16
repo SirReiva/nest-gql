@@ -10,6 +10,7 @@ import { PostsService } from './posts.service';
 import { UsersResolver } from './users.resolver';
 import { ApolloServerPluginInlineTrace } from '@apollo/server/plugin/inlineTrace';
 import { resolve } from 'path';
+import { PostDataLoaderService } from './post-dataloader.service';
 
 @Module({
 	imports: [
@@ -25,6 +26,11 @@ import { resolve } from 'path';
 			},
 		}),
 	],
-	providers: [PostsService, PostsResolver, UsersResolver],
+	providers: [
+		PostsService,
+		PostsResolver,
+		UsersResolver,
+		PostDataLoaderService,
+	],
 })
 export class PostsModule {}

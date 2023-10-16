@@ -5,10 +5,10 @@ import { Post } from './post.model';
 @Directive('@extends')
 @Directive('@key(fields: "id")')
 export class User {
-	@Field(() => ID)
+	@Field(() => ID, { complexity: 0 })
 	@Directive('@external')
 	id: number;
 
-	@Field(() => [Post])
+	@Field(() => [Post], { complexity: 1 })
 	posts?: Post[];
 }

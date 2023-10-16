@@ -14,6 +14,11 @@ export class PostsService {
 		return this.posts.filter(post => post.authorId === Number(authorId));
 	}
 
+	findAllByAuthorIds(authorIds: number[]): Post[] {
+		const numAuthorIds = authorIds.map(id => Number(id));
+		return this.posts.filter(post => numAuthorIds.includes(post.authorId));
+	}
+
 	findOne(postId: number): Post | null {
 		return this.posts.find(post => post.id === postId) || null;
 	}

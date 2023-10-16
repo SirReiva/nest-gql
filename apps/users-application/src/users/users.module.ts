@@ -8,9 +8,10 @@ import { UsersResolver } from './users.resolver';
 import { UsersService } from './users.service';
 import { ApolloServerPluginInlineTrace } from '@apollo/server/plugin/inlineTrace';
 import { resolve } from 'path';
+import { UserDataLoaderService } from './user-dataloader.service';
 
 @Module({
-	providers: [UsersResolver, UsersService],
+	providers: [UsersResolver, UsersService, UserDataLoaderService],
 	imports: [
 		GraphQLModule.forRoot<ApolloFederationDriverConfig>({
 			driver: ApolloFederationDriver,
