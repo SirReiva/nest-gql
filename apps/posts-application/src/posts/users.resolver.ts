@@ -1,4 +1,4 @@
-import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
+import { Int, Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { Post } from './models/post.model';
 import { User } from './models/user.model';
 import { PostDataLoaderService } from './post-dataloader.service';
@@ -10,5 +10,10 @@ export class UsersResolver {
 	@ResolveField(() => [Post])
 	public posts(@Parent() user: User): Promise<Post[]> {
 		return this.postDataLoaderService.loader.load(user.id);
+	}
+
+	@ResolveField(() => Int)
+	public postCount(@Parent() user: User): Promise<number> {
+		return this.postDataLoaderService.loader.load(user.id).then(r => r.length);
 	}
 }

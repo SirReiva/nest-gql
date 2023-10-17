@@ -4,15 +4,15 @@ import { User } from './user.model';
 @ObjectType()
 @Directive('@key(fields: "id")')
 export class Post {
-	@Field(() => ID, { complexity: 0 })
+	@Field(() => ID)
 	id: number;
 
 	@Field()
 	title: string;
 
-	@Field(() => Int, { complexity: 0 })
+	@Field(() => Int)
 	authorId: number;
 
-	@Field(() => User, { complexity: 1 })
+	@Field(() => User)
 	user?: User;
 }
