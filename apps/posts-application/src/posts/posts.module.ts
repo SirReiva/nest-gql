@@ -24,6 +24,7 @@ import { PostDataLoaderService } from './post-dataloader.service';
 			buildSchemaOptions: {
 				orphanedTypes: [User],
 			},
+			context: ({ req, res }: any) => ({ req, res }),
 		}),
 	],
 	providers: [

@@ -20,6 +20,7 @@ import { UserDataLoaderService } from './user-dataloader.service';
 				federation: 2,
 			},
 			plugins: [ApolloServerPluginInlineTrace()],
+			context: ({ req, res }: any) => ({ req, res }),
 		}),
 	],
 })
